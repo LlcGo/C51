@@ -1,0 +1,127 @@
+C51 COMPILER V9.54   MAIN                                                                  06/03/2026 21:27:39 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: D:\k5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main.lst)
+                    - TABS(2) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          
+   3          void Delay(unsigned int xms)    //@12.000MHz
+   4          {
+   5   1        unsigned char i, j;
+   6   1        while(xms){
+   7   2        i = 2;
+   8   2        j = 239;
+   9   2        do
+  10   2        {
+  11   3          while (--j);
+  12   3        } while (--i);
+  13   2          xms--;
+  14   2        }
+  15   1      }
+  16          unsigned char LEDNum = 0;
+  17          
+  18          void main(){
+  19   1        P2 = ~0x01;
+  20   1        while(1)
+  21   1        {
+  22   2          if(P3_1==0)
+  23   2          {
+  24   3            Delay(20);
+  25   3            while(P3_1==0);
+  26   3            Delay(20);
+  27   3            LEDNum++;
+  28   3            if (LEDNum >= 8)
+  29   3            {
+  30   4               LEDNum = 0;
+  31   4            }
+  32   3            P2 = ~ (0x01 << LEDNum);
+  33   3          }
+  34   2          if(P3_0==0)
+  35   2          {
+  36   3            Delay(20);
+  37   3            while(P3_0==0);
+  38   3            Delay(20);
+  39   3            
+  40   3            
+  41   3            if (LEDNum == 0)
+  42   3            {
+  43   4               LEDNum = 7;
+  44   4            }
+  45   3            LEDNum--;
+  46   3            P2 = ~ (0x01 << LEDNum);
+  47   3            
+  48   3          }
+  49   2        
+  50   2        }
+  51   1      }
+  52          
+  53          
+  54          #if 0
+C51 COMPILER V9.54   MAIN                                                                  06/03/2026 21:27:39 PAGE 2   
+
+              
+              void main(){
+                unsigned char LEDNum = 0;
+                while(1)
+                {
+                  if(P3_1==0)
+                  {
+                    Delay(20);
+                    while(P3_1==0);
+                    Delay(20);
+                    LEDNum++;
+                    P2 = ~LEDNum;
+                  }
+                
+                }
+              }
+              
+              void main(){
+                while(1)
+                {
+                  if(P3_1==0)
+                  {
+                    Delay(20);
+                    while(P3_1==0);
+                    Delay(20);
+                    P2_0 = ~P2_0;
+                  }
+                
+                }
+              }
+              
+              void main()
+              {
+                P2_0 = 0;
+                while(1)
+                {
+                  if(P3_1==0 && P3_0 == 0)
+                  {
+                    P2_0 = 0;
+                  }
+                  else
+                  {
+                    P2_0 = 1;
+                  }
+                }
+              }
+              #endif
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    106    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      1    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
